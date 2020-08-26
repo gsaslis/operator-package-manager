@@ -12,6 +12,12 @@ FROM registry.access.redhat.com/ubi8:latest
 
 COPY --from=builder /opt/app-root/src/operator-registry/bin/opm /bin/opm
 
+RUN mkdir /registry
+WORKDIR /registry
+
+RUN chgrp -R 0 /registry && \
+    chmod -R g+rwx /registry
+
 # This image doesn't need to run as root user
 USER 1001
 
